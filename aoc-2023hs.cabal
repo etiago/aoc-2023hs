@@ -1,6 +1,6 @@
 cabal-version: 2.2
 
--- This file has been generated from package.yaml by hpack version 0.36.0.
+-- This file has been generated from package.yaml by hpack version 0.35.2.
 --
 -- see: https://github.com/sol/hpack
 
@@ -32,9 +32,10 @@ library
       Paths_aoc_2023hs
   hs-source-dirs:
       src
-  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -O2
   build-depends:
       base >=4.7 && <5
+    , split
     , text
     , unordered-containers
   default-language: Haskell2010
@@ -47,10 +48,11 @@ executable aoc-2023hs-exe
       Paths_aoc_2023hs
   hs-source-dirs:
       app
-  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -O2 -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       aoc-2023hs
     , base >=4.7 && <5
+    , split
     , text
     , unordered-containers
   default-language: Haskell2010
@@ -64,10 +66,65 @@ executable aoc-n04-exe
       Paths_aoc_2023hs
   hs-source-dirs:
       src
-  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -O2
   build-depends:
       aoc-2023hs
     , base >=4.7 && <5
+    , split
+    , text
+    , unordered-containers
+  default-language: Haskell2010
+
+executable aoc-n05-exe
+  main-is: n05.hs
+  other-modules:
+      Lib
+      Paths_aoc_2023hs
+  autogen-modules:
+      Paths_aoc_2023hs
+  hs-source-dirs:
+      src
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -O2
+  build-depends:
+      aoc-2023hs
+    , base >=4.7 && <5
+    , split
+    , text
+    , unordered-containers
+  default-language: Haskell2010
+
+executable aoc-n07-exe
+  main-is: n07.hs
+  other-modules:
+      Lib
+      Paths_aoc_2023hs
+  autogen-modules:
+      Paths_aoc_2023hs
+  hs-source-dirs:
+      src
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -O2
+  build-depends:
+      aoc-2023hs
+    , base >=4.7 && <5
+    , split
+    , text
+    , unordered-containers
+  default-language: Haskell2010
+
+executable aoc-n08-exe
+  main-is: n08.hs
+  other-modules:
+      Lib
+      Paths_aoc_2023hs
+  autogen-modules:
+      Paths_aoc_2023hs
+  hs-source-dirs:
+      src
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -O2
+  build-depends:
+      aoc-2023hs
+    , base >=4.7 && <5
+    , split
     , text
     , unordered-containers
   default-language: Haskell2010
@@ -81,10 +138,11 @@ test-suite aoc-2023hs-test
       Paths_aoc_2023hs
   hs-source-dirs:
       test
-  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -O2 -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       aoc-2023hs
     , base >=4.7 && <5
+    , split
     , text
     , unordered-containers
   default-language: Haskell2010

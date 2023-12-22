@@ -18,7 +18,7 @@ parseSingleCard t =
       cardHalvesTokenized = map T.words cardHalves
       cardHalvesTokenizedStr = map (map T.unpack) cardHalvesTokenized
       cardHalvesInts = map (map read) cardHalvesTokenizedStr
-  in Card (cardIndex - 1) (cardHalvesInts !! 0) (cardHalvesInts !! 1) 1
+  in Card (cardIndex - 1) (head cardHalvesInts) (cardHalvesInts !! 1) 1
 
 parseCards :: String -> [Card]
 parseCards inputs =
@@ -30,7 +30,7 @@ getIntersection :: Card -> HashSet.HashSet Int
 getIntersection card =
   let cardNumbersSet = HashSet.fromList (numbers card)
       winningNumbersSet = HashSet.fromList (winningNumbers card)
-  in (HashSet.intersection cardNumbersSet winningNumbersSet)
+  in HashSet.intersection cardNumbersSet winningNumbersSet
 
 calculateCardPoints :: Card -> Int
 calculateCardPoints card =
@@ -73,9 +73,9 @@ getNewSetOfCards initialCardsState card =
 
 allCardsAreZero :: CardsState -> Bool
 allCardsAreZero currentState =
-  (all
-    (\count -> count == 0)
-    (HashMap.elems (cardCounts currentState)))
+  all
+    (== 0)
+    (HashMap.elems (cardCounts currentState))
 
 transformState :: CardsState -> CardsState
 transformState currentState =
@@ -90,7 +90,6 @@ main = do
   fileContent <- readFile "inputs/04_p1.txt"
   let cards = parseCards fileContent
       cardPoints = map calculateCardPoints cards
-      intersection = map getIntersection cards
       cardCounts = foldl' (\acc c -> HashMap.insert (index c) 1 acc) HashMap.empty cards
   print (foldl' (+) 0 cardPoints)
   print (totalCardCount (getPartTwoNewCardsAltAlt (CardsState (length cards) cards cardCounts)))
