@@ -40,10 +40,10 @@ getRouting ls =
       foldl' (\acc l -> (parseSingleRouting l acc)) HashMap.empty routingLines
     _ -> error "input error"
 
-navigate :: Routing -> (Int, String, [String], Steps) -> (Int, String, [String], Steps)
+navigate :: Routing -> (Int, String, [String], Steps) -> Int
 navigate r (it, cur, visited, ss) =
   if cur == "ZZZ" then
-    (it, cur, visited, ss)
+    it
   else
     let nextRoutes = HashMap.lookup cur r
         nextPair = case nextRoutes of
@@ -56,22 +56,6 @@ navigate r (it, cur, visited, ss) =
 
     in navigate r ((it + 1), nextVal, (nextVal : visited), (drop 1 ss))
 
---navigateBroken :: (Int, String, [String], Steps, Routing) -> (Int, String, [String], Steps, Routing)
---navigateBroken (it, cur, visited, ss, r) =
---  if cur == "ZZZ" then
---    (it, cur, visited, ss, r)
---  else
---    let nextRoutes = HashMap.lookup cur r
---        nextPair = case nextRoutes of
---                     (Just v) -> v
---                     _ -> error "error 1"
---        nextVal = case ss of
---                    'L' : _ -> fst nextPair
---                    'R' : _ -> snd nextPair
---                    _ -> error "fail"
---
---    in navigateBroken ((it + 1), nextVal, (nextVal : visited), (drop 1 ss), r)
-
 getPathUntilRepeat :: Routing -> (Steps, String, (HashSet.HashSet String), [String]) -> (Steps, String, (HashSet.HashSet String), [String])
 getPathUntilRepeat r (ss, next, seen, path) =
   let nextRoutes = HashMap.lookup next r
@@ -82,7 +66,7 @@ getPathUntilRepeat r (ss, next, seen, path) =
                   'L' : _ -> fst nextPair
                   'R' : _ -> snd nextPair
                   _ -> error "fail"
-  in if endsInZ nextVal then --HashSet.member nextVal seen && endsInZ nextVal then
+  in if endsInZ nextVal then
     (ss, nextVal, seen, path)
   else
     getPathUntilRepeat r ((drop 1 ss), nextVal, (HashSet.insert nextVal seen), (path ++ [nextVal]))
@@ -92,7 +76,7 @@ stepsToReachEnd l =
   let ls = lines l
       steps = getSteps ls
       routing = getRouting ls
-      (it, _, _, _) = navigate routing (0, "AAA", [], steps)
+      it = navigate routing (0, "AAA", [], steps)
   in it
 
 endsInA :: String -> Bool

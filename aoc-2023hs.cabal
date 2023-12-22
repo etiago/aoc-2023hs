@@ -36,6 +36,7 @@ library
       N07
       N08
       N08_Broken
+      N09
   other-modules:
       Paths_aoc_2023hs
   autogen-modules:
