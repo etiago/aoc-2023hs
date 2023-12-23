@@ -37,6 +37,7 @@ library
       N08
       N08_Broken
       N09
+      N10
   other-modules:
       Paths_aoc_2023hs
   autogen-modules:
@@ -71,13 +72,11 @@ library
   default-language: Haskell2010
 
 executable aoc-2023hs-exe
-  main-is: Main.hs
+  main-is: app/main.hs
   other-modules:
       Paths_aoc_2023hs
   autogen-modules:
       Paths_aoc_2023hs
-  hs-source-dirs:
-      app
   default-extensions:
       BangPatterns
       DeriveGeneric

@@ -1,4 +1,4 @@
-module Advent2023 where
+module Advent2023 (main) where
 
 import qualified N01
 import qualified N02
@@ -9,6 +9,7 @@ import qualified N06
 import qualified N07
 import qualified N08
 import qualified N09
+import qualified N10
 
 mains :: [(Int,IO ())]
 mains = zip [1..]
@@ -22,8 +23,10 @@ mains = zip [1..]
   , N07.main
   , N08.main
   , N09.main
+  , N10.main
   ]
 
 main :: IO ()
 main = do
-  N09.main
+  N10.main
+  print (length mains)

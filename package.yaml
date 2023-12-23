@@ -55,7 +55,6 @@ library:
 
 executables:
   aoc-2023hs-exe:
-    main:                Main.hs
-    source-dirs:         app
+    main:                app/main.hs
     dependencies:
     - aoc-2023hs
