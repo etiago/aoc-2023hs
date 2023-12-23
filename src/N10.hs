@@ -1,7 +1,6 @@
 module N10 where
 
 import Data.List (foldl')
---import Data.List.Split (splitOn)
 import qualified Data.HashMap.Strict as HashMap
 import Data.Maybe (catMaybes)
 
@@ -19,16 +18,6 @@ instance Show Path where
 
 addTuples :: (Int, Int) -> (Int, Int) -> (Int, Int)
 addTuples (a, b) (c, d) = (a + c, b + d)
-
-myTmpBoard :: [[Char]]
-myTmpBoard =
-  [
-    ['.','.','.','.','.'],
-    ['.','S','-','7','.'],
-    ['.','|','.','|','.'],
-    ['.','L','-','J','.'],
-    ['.','.','.','.','.']
-  ]
 
 -- Tuples to move the current position by
 -- a delta.
