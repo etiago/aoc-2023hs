@@ -10,6 +10,7 @@ import qualified N07
 import qualified N08
 import qualified N09
 import qualified N10
+import qualified N11
 
 mains :: [(Int,IO ())]
 mains = zip [1..]
@@ -24,9 +25,10 @@ mains = zip [1..]
   , N08.main
   , N09.main
   , N10.main
+  , N11.main
   ]
 
 main :: IO ()
 main = do
-  N10.main
+  N11.main
   print (length mains)

@@ -38,6 +38,7 @@ library
       N08_Broken
       N09
       N10
+      N11
   other-modules:
       Paths_aoc_2023hs
   autogen-modules:
@@ -63,7 +64,7 @@ library
       TypeApplications
       TypeFamilies
       UndecidableInstances
-  ghc-options: -Wall -Werror -Wno-name-shadowing
+  ghc-options: -Wall -Werror -Wno-name-shadowing -O2
   build-depends:
       base >=4.7 && <5
     , split
@@ -96,7 +97,7 @@ executable aoc-2023hs-exe
       TypeApplications
       TypeFamilies
       UndecidableInstances
-  ghc-options: -Wall -Werror -Wno-name-shadowing
+  ghc-options: -Wall -Werror -Wno-name-shadowing -O2
   build-depends:
       aoc-2023hs
     , base >=4.7 && <5

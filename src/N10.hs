@@ -6,7 +6,7 @@ import Data.Maybe (catMaybes)
 
 type Board = [[Char]]
 type Delta = (Int, Int)
-data Path = Path { curPos :: (Int, Int), stepsTaken :: Int, board :: Board }
+data Path = Path { curPos :: (Int, Int), prevPos :: (Int, Int), stepsTaken :: Int, board :: Board }
 instance Show Path where
   show (Path {curPos = (x, y), stepsTaken = steps, board = b}) =
     "Current Position: " ++ show (x, y) ++
@@ -63,7 +63,16 @@ findPossiblePaths Path {curPos, stepsTaken, board} =
       positionsAllowed = catMaybes
         $ map (\(allowedDirChars, p) -> getSinglePositionFromBoard board (p, allowedDirChars))
         $ zip allowedDirectionChars positions
-  in [Path newPos (stepsTaken + 1) (blankPositionInBoard board curPos) | newPos <- positionsAllowed]
+  in [Path newPos curPos (stepsTaken + 1) (blankPositionInBoard board curPos) | newPos <- positionsAllowed]
+
+findPossiblePathsNoBlanking :: Path -> [Path]
+findPossiblePathsNoBlanking Path {curPos, prevPos, stepsTaken, board} =
+  let (pPosX, pPosY) = prevPos
+      positions = map (addTuples curPos) allowedDirectionDeltas
+      positionsAllowed = [(px, py) | (px, py) <- (catMaybes
+        $ map (\(allowedDirChars, p) -> getSinglePositionFromBoard board (p, allowedDirChars))
+        $ zip allowedDirectionChars positions), (px /= pPosX || py /= pPosY)]
+  in [Path newPos curPos (stepsTaken + 1) board | newPos <- positionsAllowed]
 
 -- For a given starting path, explore all paths until
 -- no more movement is possible.
@@ -106,6 +115,6 @@ main = do
         getLongest
         $ groupPositionToShortest
         $ exploreAllPaths
-        $ Path start 0
+        $ Path start start 0
         $ board
   print longest

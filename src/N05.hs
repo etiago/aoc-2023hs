@@ -2,7 +2,7 @@ module N05 (main) where
 
 import qualified Data.Text as T
 import Data.List (find)
-import Data.List.Split (chunksOf)
+--import Data.List.Split (chunksOf)
 import Data.List (foldl')
 
 data MapperGroup = MapperGroup { mappers :: [Mapper] }
@@ -44,13 +44,20 @@ getSeeds ts =
   let seedStr = T.splitOn (T.pack ": ") (head ts) !! 1
   in MappingInput $ map read (words $ T.unpack seedStr)
 
+extractSeedsRanges :: [Int] -> [Int]
+extractSeedsRanges (rangeStart : rangeLength : ss) =
+  [rangeStart..(rangeStart + rangeLength)] ++ extractSeedsRanges ss
+extractSeedsRanges _ = []
+
 getSeedsAsRanges :: [T.Text] -> [MapperGroup] -> MappingInput
-getSeedsAsRanges ts =
-  let seedStr = T.splitOn (T.pack ": ") (head ts) !! 1
-      chunkedInts :: [[Int]]
-      chunkedInts = chunksOf 2 $ map read $ words $ T.unpack seedStr
-      range = concat $ map (\c -> [(c !! 0)..((c!!0) + (c !! 1))]) chunkedInts
-  in MappingInput range --map read (words $ T.unpack seedStr)
+getSeedsAsRanges (firstLine : _) =
+  let seedStr = case (T.splitOn (T.pack ": ") firstLine) of
+        [_, s] -> s
+        _ -> error "bad seed strs"
+      range = extractSeedsRanges $ map read $ words $ T.unpack seedStr
+  in MappingInput range
+
+getSeedsAsRanges _ = error "bad seed input"
 
 getMappingInput :: [T.Text] -> MappingInput
 getMappingInput ts = getSeeds ts $ getMappers ts
