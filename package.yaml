@@ -24,6 +24,7 @@ dependencies:
 - text
 - unordered-containers
 - split
+- megaparsec
 
 default-extensions:
 - BangPatterns

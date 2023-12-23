@@ -30,5 +30,5 @@ mains = zip [1..]
 
 main :: IO ()
 main = do
-  N11.main
+  N08.main
   print (length mains)

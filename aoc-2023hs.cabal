@@ -67,6 +67,7 @@ library
   ghc-options: -Wall -Werror -Wno-name-shadowing -O2
   build-depends:
       base >=4.7 && <5
+    , megaparsec
     , split
     , text
     , unordered-containers
@@ -101,6 +102,7 @@ executable aoc-2023hs-exe
   build-depends:
       aoc-2023hs
     , base >=4.7 && <5
+    , megaparsec
     , split
     , text
     , unordered-containers
