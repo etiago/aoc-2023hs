@@ -1,6 +1,6 @@
+module N05 (main) where
+
 import qualified Data.Text as T
-import Data.Foldable (minimumBy)
-import Data.Ord (comparing)
 import Data.List (find)
 import Data.List.Split (chunksOf)
 import Data.List (foldl')

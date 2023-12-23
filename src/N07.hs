@@ -1,6 +1,8 @@
+module N07 (main) where
+
 import qualified Data.HashMap.Strict as HashMap
 import Data.List (elemIndex, sortBy, foldl')
-import Data.Maybe (fromJust, catMaybes, listToMaybe, mapMaybe)
+import Data.Maybe (fromJust, mapMaybe)
 
 data CardSequence = CardSequence { cards :: [Char], handType :: HandType, bid :: Int } deriving (Show)
 data HandType = FiveOfAKind
@@ -13,7 +15,9 @@ data HandType = FiveOfAKind
 
 handsInRankOrder :: [HandType]
 handsInRankOrder = [FiveOfAKind, FourOfAKind, FullHouse, ThreeOfAKind, TwoPair, OnePair, HighCard]
+cardsInRankOrder :: [Char]
 cardsInRankOrder = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2']
+cardsInNewRankOrder :: [Char]
 cardsInNewRankOrder = ['A', 'K', 'Q', 'T', '9', '8', '7', '6', '5', '4', '3', '2', 'J']
 
 cardsToRank :: [Char] -> HashMap.HashMap Char Int
@@ -53,6 +57,7 @@ getHandTypeFromCards cs =
   let counts :: HashMap.HashMap Char Int
       counts = foldl (\acc c -> HashMap.insertWith (+) c 1 acc) HashMap.empty cs
       els = HashMap.elems counts
+      freqs :: HashMap.HashMap Int Int
       freqs = foldl (\acc c -> HashMap.insertWith (+) c 1 acc) HashMap.empty els
   in if 1 == HashMap.lookupDefault 0 5 freqs then
     FiveOfAKind
@@ -110,7 +115,7 @@ getTotalWinnings :: [(Int, Int)] -> Int
 getTotalWinnings = foldl (\sum rb -> sum + ((fst rb) * (snd rb))) 0
 
 upgradeCardSequencesWithJokers :: CardSequence -> CardSequence
-upgradeCardSequencesWithJokers CardSequence{cards, handType, bid} =
+upgradeCardSequencesWithJokers CardSequence {cards = cards, handType = handType, bid = bid} =
   CardSequence cards (upgradeHandTypeWithJokers cards handType) bid
 
 main :: IO()

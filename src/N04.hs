@@ -1,6 +1,7 @@
+module N04 (main) where
+
 import qualified Data.Text as T
 import qualified Data.HashSet as HashSet
-import Debug.Trace (trace)
 import qualified Data.HashMap.Strict as HashMap
 import Data.List (foldl')
 
@@ -26,12 +27,6 @@ parseCards inputs =
       inputLines = T.lines inputText
   in map parseSingleCard inputLines
 
-getIntersection :: Card -> HashSet.HashSet Int
-getIntersection card =
-  let cardNumbersSet = HashSet.fromList (numbers card)
-      winningNumbersSet = HashSet.fromList (winningNumbers card)
-  in HashSet.intersection cardNumbersSet winningNumbersSet
-
 calculateCardPoints :: Card -> Int
 calculateCardPoints card =
   let cardNumbersSet = HashSet.fromList (numbers card)
@@ -43,7 +38,7 @@ calculateCardPoints card =
      else 2 ^ ((HashSet.size intersection) - 1)
 
 getNewCardIndices :: [Card] -> Card -> [Int]
-getNewCardIndices allCards c =
+getNewCardIndices _ c =
   let cardNumbersSet = HashSet.fromList (numbers c)
       winningNumbersSet = HashSet.fromList (winningNumbers c)
       winningNumbersCount = (HashSet.size $ HashSet.intersection winningNumbersSet cardNumbersSet)
@@ -51,8 +46,7 @@ getNewCardIndices allCards c =
 
 increaseCountOfCardInState :: Int -> CardsState -> Int -> CardsState
 increaseCountOfCardInState increaseAmount state idx =
-  let card = (allCards state) !! idx
-      oldCardCounts = (cardCounts state)
+  let oldCardCounts = (cardCounts state)
       oldCount = oldCardCounts HashMap.! idx
       newCardCounts = HashMap.insert idx (oldCount + increaseAmount) oldCardCounts
   in state { cardCounts = newCardCounts }
@@ -62,7 +56,6 @@ getNewSetOfCards initialCardsState card =
   let cardIdx = (index card)
       actualCard = (allCards initialCardsState) !! cardIdx
       cardCount = (cardCounts initialCardsState) HashMap.! cardIdx
-      newCard = actualCard { count = 0 }
       newCounts = HashMap.insert cardIdx 0 (cardCounts initialCardsState)
       stateWithDecreasedCount = initialCardsState { cardCounts = newCounts }
       newCardIndicesToCheck = getNewCardIndices (allCards initialCardsState) actualCard

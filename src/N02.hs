@@ -1,3 +1,5 @@
+module N02 (main) where
+
 import qualified Data.Text as T
 
 data RevealRound = RevealRound { red :: Int, green :: Int, blue :: Int } deriving (Show)
@@ -52,7 +54,8 @@ main = do
   --print games
 
   let validStateGames = (map gameIsValid games)
-  let indexedValidStateGames = zip validStateGames [1..]
+  let indexedValidStateGames :: [(Bool, Int)]
+      indexedValidStateGames = zip validStateGames [1..]
   let indexedOnlyValid = filter fst indexedValidStateGames
   let sum = foldl (\acc tuple -> acc + snd tuple) 0 indexedOnlyValid
   print sum

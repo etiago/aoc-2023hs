@@ -1,9 +1,10 @@
+module N08 (main) where
+
 import qualified Data.HashMap.Strict as HashMap
 import qualified Data.HashSet as HashSet
-import Data.List (elemIndex, sortBy, foldl', foldl1')
+import Data.List (foldl', foldl1')
 import Data.List.Split (splitOn)
-import Data.Maybe (fromJust, catMaybes, listToMaybe, mapMaybe)
-import Debug.Trace (trace)
+--import Data.Maybe (fromJust, catMaybes, listToMaybe, mapMaybe)
 
 type Steps = [Char]
 type Routing = HashMap.HashMap String (String, String)
@@ -22,7 +23,9 @@ parseLeftRightStrs left right =
 
 parseSingleRouting :: String -> HashMap.HashMap String (String, String) -> HashMap.HashMap String (String, String)
 parseSingleRouting rl routing =
-  let chunks = splitOn " = " rl
+  let
+    chunks :: [String]
+    chunks = splitOn " = " rl
   in case chunks of
     [k, v] -> let leftRight = splitOn ", " v
               in case leftRight of
@@ -33,7 +36,7 @@ parseSingleRouting rl routing =
 getRouting :: [String] -> Routing
 getRouting ls =
   case ls of
-    (firstLine : secondLine : routingLines) ->
+    (_ : _ : routingLines) ->
       foldl' (\acc l -> (parseSingleRouting l acc)) HashMap.empty routingLines
     _ -> error "input error"
 
@@ -49,23 +52,25 @@ navigate r (it, cur, visited, ss) =
         nextVal = case ss of
                     'L' : _ -> fst nextPair
                     'R' : _ -> snd nextPair
+                    _ -> error "fail"
 
     in navigate r ((it + 1), nextVal, (nextVal : visited), (drop 1 ss))
 
-navigateBroken :: (Int, String, [String], Steps, Routing) -> (Int, String, [String], Steps, Routing)
-navigateBroken (it, cur, visited, ss, r) =
-  if cur == "ZZZ" then
-    (it, cur, visited, ss, r)
-  else
-    let nextRoutes = HashMap.lookup cur r
-        nextPair = case nextRoutes of
-                     (Just v) -> v
-                     _ -> error "error 1"
-        nextVal = case ss of
-                    'L' : _ -> fst nextPair
-                    'R' : _ -> snd nextPair
-
-    in navigateBroken ((it + 1), nextVal, (nextVal : visited), (drop 1 ss), r)
+--navigateBroken :: (Int, String, [String], Steps, Routing) -> (Int, String, [String], Steps, Routing)
+--navigateBroken (it, cur, visited, ss, r) =
+--  if cur == "ZZZ" then
+--    (it, cur, visited, ss, r)
+--  else
+--    let nextRoutes = HashMap.lookup cur r
+--        nextPair = case nextRoutes of
+--                     (Just v) -> v
+--                     _ -> error "error 1"
+--        nextVal = case ss of
+--                    'L' : _ -> fst nextPair
+--                    'R' : _ -> snd nextPair
+--                    _ -> error "fail"
+--
+--    in navigateBroken ((it + 1), nextVal, (nextVal : visited), (drop 1 ss), r)
 
 getPathUntilRepeat :: Routing -> (Steps, String, (HashSet.HashSet String), [String]) -> (Steps, String, (HashSet.HashSet String), [String])
 getPathUntilRepeat r (ss, next, seen, path) =
@@ -76,6 +81,7 @@ getPathUntilRepeat r (ss, next, seen, path) =
       nextVal = case ss of
                   'L' : _ -> fst nextPair
                   'R' : _ -> snd nextPair
+                  _ -> error "fail"
   in if endsInZ nextVal then --HashSet.member nextVal seen && endsInZ nextVal then
     (ss, nextVal, seen, path)
   else
@@ -86,7 +92,7 @@ stepsToReachEnd l =
   let ls = lines l
       steps = getSteps ls
       routing = getRouting ls
-      (it, cur, visited, ss) = navigate routing (0, "AAA", [], steps)
+      (it, _, _, _) = navigate routing (0, "AAA", [], steps)
   in it
 
 endsInA :: String -> Bool
@@ -99,28 +105,9 @@ endsInZ s = case s of
               [_, _, 'Z'] -> True
               _ -> False
 
-
-getNextNode :: Routing -> Steps -> String -> String
-getNextNode r ss cur =
-  let nextRoutes = HashMap.lookup cur r
-      nextPair = case nextRoutes of
-                   (Just v) -> v
-                   _ -> error "error 1"
-  in case ss of
-       'L' : _ -> fst nextPair
-       'R' : _ -> snd nextPair
-
-navigateMultiples :: Routing -> (Int, [String], Steps) -> (Int, [String], Steps)
-navigateMultiples r (it, curs, ss) =
-  if all endsInZ curs then
-    (it, curs, ss)
-  else
-    let nextNodes = map (getNextNode r ss) curs
-    in navigateMultiples r ((it + 1), nextNodes, (drop 1 ss))
-
 getCycleLength :: Steps -> Routing -> String -> Int
 getCycleLength ss r start =
-  let (steps, next, seen, path) = getPathUntilRepeat r (ss, start, HashSet.singleton start, [start])
+  let (_, _, _, path) = getPathUntilRepeat r (ss, start, HashSet.singleton start, [start])
   in length path
 
 stepsP2 :: String -> Int

@@ -1,8 +1,10 @@
+module N01 (main) where
+
 import Data.Char (isDigit)
 import Data.Maybe (mapMaybe)
-import qualified Data.Map as Map
 import qualified Data.Text as T
 
+digitsList :: [(String, String)]
 digitsList = [("one", "one1one"),
                ("two", "two2two"),
                ("three", "three3three"),
@@ -12,12 +14,6 @@ digitsList = [("one", "one1one"),
                ("seven", "seven7seven"),
                ("eight", "eight8eight"),
                ("nine", "nine9nine")]
-
-findAndReplace :: String -> String -> String -> String
-findAndReplace old new = T.unpack . T.replace (T.pack old) (T.pack new) . T.pack
-
-findAndReplaceOnText :: T.Text -> T.Text -> T.Text -> T.Text
-findAndReplaceOnText old new = T.replace old new
 
 findAndReplaceAllDigits :: String -> String
 findAndReplaceAllDigits str =

@@ -25,14 +25,43 @@ source-repository head
 
 library
   exposed-modules:
+      Advent2023
       Lib
+      N01
+      N02
+      N03
+      N04
+      N05
+      N06
+      N07
+      N08
+      N08_Broken
   other-modules:
       Paths_aoc_2023hs
   autogen-modules:
       Paths_aoc_2023hs
   hs-source-dirs:
       src
-  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -O2
+  default-extensions:
+      BangPatterns
+      DeriveGeneric
+      DuplicateRecordFields
+      EmptyCase
+      FlexibleContexts
+      GADTs
+      GeneralizedNewtypeDeriving
+      InstanceSigs
+      LambdaCase
+      MultiWayIf
+      NamedFieldPuns
+      NondecreasingIndentation
+      NumericUnderscores
+      RankNTypes
+      ScopedTypeVariables
+      TypeApplications
+      TypeFamilies
+      UndecidableInstances
+  ghc-options: -Wall -Werror -Wno-name-shadowing
   build-depends:
       base >=4.7 && <5
     , split
@@ -48,97 +77,26 @@ executable aoc-2023hs-exe
       Paths_aoc_2023hs
   hs-source-dirs:
       app
-  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -O2 -threaded -rtsopts -with-rtsopts=-N
-  build-depends:
-      aoc-2023hs
-    , base >=4.7 && <5
-    , split
-    , text
-    , unordered-containers
-  default-language: Haskell2010
-
-executable aoc-n04-exe
-  main-is: n04.hs
-  other-modules:
-      Lib
-      Paths_aoc_2023hs
-  autogen-modules:
-      Paths_aoc_2023hs
-  hs-source-dirs:
-      src
-  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -O2
-  build-depends:
-      aoc-2023hs
-    , base >=4.7 && <5
-    , split
-    , text
-    , unordered-containers
-  default-language: Haskell2010
-
-executable aoc-n05-exe
-  main-is: n05.hs
-  other-modules:
-      Lib
-      Paths_aoc_2023hs
-  autogen-modules:
-      Paths_aoc_2023hs
-  hs-source-dirs:
-      src
-  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -O2
-  build-depends:
-      aoc-2023hs
-    , base >=4.7 && <5
-    , split
-    , text
-    , unordered-containers
-  default-language: Haskell2010
-
-executable aoc-n07-exe
-  main-is: n07.hs
-  other-modules:
-      Lib
-      Paths_aoc_2023hs
-  autogen-modules:
-      Paths_aoc_2023hs
-  hs-source-dirs:
-      src
-  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -O2
-  build-depends:
-      aoc-2023hs
-    , base >=4.7 && <5
-    , split
-    , text
-    , unordered-containers
-  default-language: Haskell2010
-
-executable aoc-n08-exe
-  main-is: n08.hs
-  other-modules:
-      Lib
-      Paths_aoc_2023hs
-  autogen-modules:
-      Paths_aoc_2023hs
-  hs-source-dirs:
-      src
-  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -O2
-  build-depends:
-      aoc-2023hs
-    , base >=4.7 && <5
-    , split
-    , text
-    , unordered-containers
-  default-language: Haskell2010
-
-test-suite aoc-2023hs-test
-  type: exitcode-stdio-1.0
-  main-is: Spec.hs
-  other-modules:
-      Paths_aoc_2023hs
-  autogen-modules:
-      Paths_aoc_2023hs
-  hs-source-dirs:
-      test
-  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -O2 -threaded -rtsopts -with-rtsopts=-N
+  default-extensions:
+      BangPatterns
+      DeriveGeneric
+      DuplicateRecordFields
+      EmptyCase
+      FlexibleContexts
+      GADTs
+      GeneralizedNewtypeDeriving
+      InstanceSigs
+      LambdaCase
+      MultiWayIf
+      NamedFieldPuns
+      NondecreasingIndentation
+      NumericUnderscores
+      RankNTypes
+      ScopedTypeVariables
+      TypeApplications
+      TypeFamilies
+      UndecidableInstances
+  ghc-options: -Wall -Werror -Wno-name-shadowing
   build-depends:
       aoc-2023hs
     , base >=4.7 && <5
